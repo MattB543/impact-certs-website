@@ -1,0 +1,143 @@
+<!doctype html>
+
+<script type="module">
+
+  import { NFTStorage } from 'https://cdn.jsdelivr.net/npm/nft.storage/dist/bundle.esm.min.js'
+  import { ethers } from "./js/ethers-5.1.esm.min.js";
+
+  // Create your own token for free at https://nft.storage/
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDIyRUIxYjZjNzM3MTdiODY3N0IzMzk4NDRDNTRjRjQ3NmIxMzMyM2EiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTYzOTIzOTAyNjc0OSwibmFtZSI6Ik5GVCBTdG9yYWdlIFRlc3QifQ.uu933RGtkHVYdpdm81oYTJOw4iSxqcymgvFqxLc0iFQ";
+
+  // Mint the NFT on click
+  document.querySelector('button').addEventListener('click', async e => {
+    document.getElementById('loading_ipfs').innerHTML = `Uploading metadata to IPFS...`;
+    const nft_client = new NFTStorage({ token });
+
+    // Define the impact certificate ipfs_res and store it
+    const ipfs_res = await nft_client.store({
+      name: document.getElementById('nft_name').value,
+      description: document.getElementById('nft_desc').value,
+      image: new File(document.getElementById('nft_image').files, "im.png", {
+        type: "image/png",
+      }),
+      type: "Impact Certificate"
+    });
+
+
+    // Display the link to the IPFS metadata & the signature message
+    document.getElementById('ipfs_link').innerHTML = `<a target="_blank" href='https://ipfs.io/ipfs/${ipfs_res.url.replace("ipfs://", "")}'>View metadata on IPFS</a>`
+    document.getElementById('loading_ipfs').style.display = "none"
+    document.getElementById('loading_mint').innerHTML = `Waiting for signature...`;
+
+
+    // Define the minter address and ABI
+    const MINTER_ADDRESS = '0x89b93B72F484470F15Dd181DbBFF0d2B2d5B22F9';
+    const MINTER_ABI = `[{
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
+      }
+    ],
+    "name": "safeMint",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }]`
+
+    // Wrap the window.ethereum object injected by MetaMask with the ethers API
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner()
+
+    // Connect to the minting contract
+    const minterContract = new ethers.Contract(MINTER_ADDRESS, MINTER_ABI, signer);
+
+    // Get the address to send the NFT to
+    const address_to = document.getElementById('nft_address').value
+
+    // Call the safeMint smart contract function.
+    const mint = await minterContract.safeMint(address_to, ipfs_res.url);
+
+    // Display the minting transaction
+    document.getElementById('loading_mint').style.display = "none"
+    document.getElementById('mint_transaction').innerHTML = `<a target="_blank" href="https://ropsten.etherscan.io/tx/${mint.hash}">View Etherscan Transaction</a>`;
+
+  })
+</script>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Impact Certificate Minter</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/minter.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+  <div class="body">
+    <div class="menu">
+      <div><a href="../">Home</a></div>
+      <div class="active"><a href="/minter">Minter</a></div>
+      <div><a href="/auction">Auction</a></div>
+      <div><a href="/gallery">Gallery</a></div>
+    </div>
+    <div class="minter">
+      <div class="header">Impact Certificate Minter</div>
+      <div>Impact Certificate Name</div>
+      <div>
+        <input id="nft_name" type="text" />
+      </div>
+      <div>Impact Certificate Description</div>
+      <div>
+        <input id="nft_desc" type="text" />
+      </div>
+      <div>Owner Address</div>
+      <div>
+        <input id="nft_address" type="text" />
+      </div>
+      <div>Image</div>
+      <div>
+        <input id="nft_image" type="file" />
+      </div>
+      <button class="mint">Mint</button>
+    </div>
+
+    <div>
+      <p id="loading_ipfs"></p>
+      <p id="ipfs_link"></p>
+      <p id="loading_mint"></p>
+      <p id="mint_transaction"></p>
+
+    </div>
+    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+  </div>
+</body>
+
+</html>
