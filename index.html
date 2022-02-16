@@ -19,6 +19,7 @@
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/faq.css">
 
   <meta name="theme-color" content="#fafafa">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,8 +69,9 @@
         <p>But it's currently hard to make money funding or working on these problems. The solutions would be public
           goods limiting the ability to extract profit so they are reliant on governments or
           philanthropy.</p>
-        <p><span class="blue">Enter impact certificates: a way to maximize good while maximizing profit.</span></p>
-        <p>Impact certificates are NFTs issued to people who have done something good, e.g. publishing a seminal research
+        <p><b>Enter impact certificates: a way to maximize good while maximizing profit.</b></p>
+        <p>Impact certificates are NFTs issued to people who have done something good, e.g. publishing a seminal
+          research
           paper on carbon capture.</p>
         <p>The owner of the impact certificate can sell it to someone else giving the new owner 'attributed
           impact' for the good action. This creates a marketplace where profit-maximizing actors are
@@ -86,8 +88,107 @@
       <div class="mint_cta_details">
         impactcerts.com is currently in Alpha and on the Ropsten test net
       </div>
-      <a href="/minter"><div class="mint_button">Mint</div></a>
+      <a href="/minter">
+        <div class="mint_button">Mint</div>
+      </a>
     </div>
+
+    <div class="faq">
+        <div class="header">FAQ</div>
+        <h3 class="question">
+          <button aria-expanded="false">
+            What are impact certificates?
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 9 9">
+              <rect class="vert" height="7" width="1" y="1" x="4" />
+              <rect height="1" width="7" y="4" x="1" />
+            </svg>
+          </button>
+        </h3>
+        <div hidden class="question_text">
+          <p>answer</p>
+        </div>
+
+        <h3 class="question">
+          <button aria-expanded="false">
+            Where does the profit incentive come from?
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 9 9">
+              <rect class="vert" height="7" width="1" y="1" x="4" />
+              <rect height="1" width="7" y="4" x="1" />
+            </svg>
+          </button>
+        </h3>
+        <div hidden class="question_text">
+          <p>answer</p>
+        </div>
+
+
+        <h3 class="question">
+          <button aria-expanded="false">
+            Are these certificates tax-deductible at some point in the market process?
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 9 9">
+              <rect class="vert" height="7" width="1" y="1" x="4" />
+              <rect height="1" width="7" y="4" x="1" />
+            </svg>
+          </button>
+        </h3>
+        <div hidden class="question_text">
+          <p>answer</p>
+        </div>
+
+        <h3 class="question">
+          <button aria-expanded="false">
+            Is this like carbon credits?
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 9 9">
+              <rect class="vert" height="7" width="1" y="1" x="4" />
+              <rect height="1" width="7" y="4" x="1" />
+            </svg>
+          </button>
+        </h3>
+        <div hidden class="question_text">
+          <p>Answer</p>
+        </div>
+
+        <h3 class="question">
+          <button aria-expanded="false">
+            What kind of public goods/impacts would this fund?
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 9 9">
+              <rect class="vert" height="7" width="1" y="1" x="4" />
+              <rect height="1" width="7" y="4" x="1" />
+            </svg>
+          </button>
+        </h3>
+        <div hidden class="question_text">
+          <p>Answer</p>
+        </div>
+
+        <h3 class="question">
+          <button aria-expanded="false">
+            How is this retroactive public goods funding?
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 9 9">
+              <rect class="vert" height="7" width="1" y="1" x="4" />
+              <rect height="1" width="7" y="4" x="1" />
+            </svg>
+          </button>
+        </h3>
+        <div hidden class="question_text">
+          <p>Answer</p>
+        </div>
+
+        <h3 class="question">
+          <button aria-expanded="false">
+            How is this unique? How does it differ from other projects in this space?
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 9 9">
+              <rect class="vert" height="7" width="1" y="1" x="4" />
+              <rect height="1" width="7" y="4" x="1" />
+            </svg>
+          </button>
+        </h3>
+        <div hidden class="question_text">
+          <p>answer</p>
+        </div>
+      </div>
+  </div>
+
   </div>
   <footer class="footer">ImpactCerts.com - An Open Source Public Good</footer>
 
@@ -96,6 +197,23 @@
   <script src="js/main.js"></script>
 
   </div>
+  <script>
+    (function () {
+      const headings = document.querySelectorAll('h3');
+
+      Array.prototype.forEach.call(headings, h => {
+        let btn = h.querySelector('button');
+        let target = h.nextElementSibling;
+
+        btn.onclick = () => {
+          let expanded = btn.getAttribute('aria-expanded') === 'true';
+
+          btn.setAttribute('aria-expanded', !expanded);
+          target.hidden = expanded;
+        }
+      });
+    })();
+  </script>
 </body>
 
 </html>
