@@ -350,7 +350,8 @@ input {
 }
 
 .explainer_card {
-  max-width: 380px;
+  max-width: 95%;
+  width: 380px;
   margin: 0 20px 0 20px;
   -webkit-box-shadow: 0px 9px 12px 6px #3030305b;
   box-shadow: 0px 9px 12px 6px #3030305b;
@@ -361,7 +362,6 @@ input {
   display: flex;
   min-height: 140px;
   align-items: center;
-  display: flex;
   flex-direction: column;
   font-size: 1.1rem;
 }
@@ -375,7 +375,7 @@ input {
   font-weight: lighter;
   font-size: 2.3rem;
   margin: 0 0 50px 0;
-  letter-spacing: 15px;
+  letter-spacing: 13px;
 }
 
 .discord_button {
@@ -401,4 +401,60 @@ input {
 .footer {
   text-align: center;
   margin: 10px 0 10px 0;
+}
+
+.step_back{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.step_back_details{
+  width: 700px;
+  max-width: 95%;
+  font-size: 1.1rem;
+}
+
+.step_back_details p{
+  margin: 0 0 40px 0;
+}
+
+.mint_cta{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.7rem;
+  font-weight: bold;
+  width: 800px;
+  max-width: 95%;
+  border: 8px dashed #0466c8af;
+  padding: 30px;
+  border-radius: 15px;
+  margin: 30px 0 80px 0;
+}
+
+.mint_cta_details{
+  font-size: .8rem;
+  font-weight: normal;
+}
+
+.mint_button{
+  padding: 5px 30px 5px 30px;
+  font-size: 1.3rem;
+  font-weight: normal;
+  border: 1px solid #0466c8;
+  border-radius: 8px;
+  margin: 25px 0 0 0;
+}
+
+
+@media only screen and (max-width: 800px) {
+  .explainer_flex{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .explainer_card{
+    margin: 30px 0 0 0;
+  }
 }
